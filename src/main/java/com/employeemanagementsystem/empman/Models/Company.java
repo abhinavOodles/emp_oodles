@@ -1,0 +1,38 @@
+package com.employeemanagementsystem.empman.Models;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+@Entity
+@Table(name="Company")
+public class Company {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int registrationNumber ;
+
+    private LocalDate yearOFRegistration ;
+
+    private int numberOfEmployees ;
+
+    @OneToMany(mappedBy = "Department",cascade = CascadeType.ALL)
+    List<Department> departments = new ArrayList<>() ;
+
+    @OneToMany(mappedBy = "Employee" , cascade = CascadeType.ALL)
+    List<Employee> employeeList = new ArrayList<>() ;
+
+
+
+}
