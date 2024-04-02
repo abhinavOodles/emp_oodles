@@ -20,6 +20,7 @@ public class Employee {
     private int employeeId ;
 
     private String employeeName ;
+
     @Enumerated(EnumType.STRING)
     private Gender gender ;
 
@@ -31,8 +32,8 @@ public class Employee {
     private String companyName ;
 
     @ManyToOne
-    Department department ;
+    private Department department;
 
-    @OneToOne
-    Company company ;
+    @ManyToOne
+    private Company company;
 }

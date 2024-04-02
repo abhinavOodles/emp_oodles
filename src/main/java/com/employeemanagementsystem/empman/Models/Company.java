@@ -27,11 +27,11 @@ public class Company {
 
     private int numberOfEmployees ;
 
-    @OneToMany(mappedBy = "Department",cascade = CascadeType.ALL)
-    List<Department> departments = new ArrayList<>() ;
+    @OneToMany(mappedBy = "company",cascade = CascadeType.ALL)
+    private List<Department> departments = new ArrayList<>() ;
 
-    @OneToMany(mappedBy = "Employee" , cascade = CascadeType.ALL)
-    List<Employee> employeeList = new ArrayList<>() ;
+    @OneToMany(mappedBy = "company" , cascade = CascadeType.ALL)
+    private List<Employee> employeeList = new ArrayList<>() ;
 
 
 

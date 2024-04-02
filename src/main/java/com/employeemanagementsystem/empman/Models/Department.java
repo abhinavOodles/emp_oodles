@@ -23,13 +23,13 @@ public class Department {
 
     private String departmentName ;
 
-    private int numberOfEmployeeInDepartments;
+    private Integer numberOfEmployeeInDepartments;
 
-    @OneToMany
-    List<Employee> employeeList =  new ArrayList<>();
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employeeList =  new ArrayList<>();
 
     @ManyToOne
-    Company company ;
+    private Company company;
 
 
 
