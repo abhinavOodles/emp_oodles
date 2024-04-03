@@ -1,11 +1,14 @@
 package com.employeemanagementsystem.empman.Dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class DepartmentEntryDto {
 
     private int departmentId ;
     private String departmentName ;
-    private int noOfEmployeeInADepartment ;
+
 }

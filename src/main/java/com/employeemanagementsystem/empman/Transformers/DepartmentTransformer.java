@@ -9,7 +9,6 @@ public class DepartmentTransformer {
         Department department = Department.builder()
                 .departmentId((departmentEntryDto.getDepartmentId()))
                 .departmentName(departmentEntryDto.getDepartmentName())
-
                 .build();
 
         return department ;

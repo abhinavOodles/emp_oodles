@@ -12,13 +12,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class empDto {
-
+    private int empId ;
     private String empName;
     private int age;
     private Gender gender;
     private int deptId;
     private Designation designation;
-    private int departmentId ;
     private String departmentName ;
     private String companyName ;
 

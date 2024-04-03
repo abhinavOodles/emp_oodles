@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,6 +23,8 @@ public class Company {
     private int registrationNumber ;
 
     private LocalDate yearOFRegistration ;
+
+    private String companyName ;
 
 
 

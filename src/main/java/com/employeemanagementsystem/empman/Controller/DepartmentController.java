@@ -4,10 +4,7 @@ import com.employeemanagementsystem.empman.Service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/department")
@@ -26,4 +23,11 @@ public class DepartmentController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/no-of-emp-in-a-department")
+    private int noOfEmpInADepartment (@RequestParam int departmentId){
+        int numberOfEmployeeInATeam = departmentService.getNumberOfEmployee(departmentId) ;
+        return departmentId ;
+    }
+
 }

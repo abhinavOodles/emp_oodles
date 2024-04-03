@@ -7,6 +7,7 @@ import com.employeemanagementsystem.empman.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,5 +36,29 @@ public class EmployeeController {
        List<Employee> list =  employeeService.getListOfEmployeeInaSameDepartment(departmentId) ;
 
         return list;
+    }
+
+
+
+    @PutMapping("/change-the-name-of-employee")
+    private ResponseEntity<String> changeName (@RequestParam int employeeId , @RequestParam String name) {
+        try{
+          String result =   employeeService.changeName(employeeId ,name) ;
+          return  new ResponseEntity<>(result , HttpStatus.FOUND) ;
+        }
+        catch (Exception e){
+           return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST) ;
+        }
+    }
+
+    @DeleteMapping("/remove-employee")
+    private ResponseEntity<String> deleteEmployee (@RequestParam int empId){
+        try {
+            String result = employeeService.deleteEmployee(empId);
+            return new ResponseEntity<>(result , HttpStatus.FOUND) ;
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST) ;
+        }
     }
 }

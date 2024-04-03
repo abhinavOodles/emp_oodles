@@ -1,16 +1,14 @@
 package com.employeemanagementsystem.empman.Dtos;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class addCompanyDto {
     private int registrationNumber;
     private int yearOfRegistration  ;
-
-    private int numberOfEmployee  ;
+    private String companyName  ;
 
 
 }
