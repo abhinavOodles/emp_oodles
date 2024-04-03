@@ -7,20 +7,19 @@ import com.employeemanagementsystem.empman.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/Employees")
 public class EmployeeController {
 
 
     @Autowired
     private EmployeeService employeeService;
 
-    @PostMapping()
+    @PostMapping("/add-Employee")
     public ResponseEntity<String> addDepartment (@RequestBody empDto empDto){
         try {
             String result =  employeeService.addEmp(empDto);
@@ -29,5 +28,12 @@ public class EmployeeController {
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/get-list-of-employee-same-department")
+    private List<Employee> employeeList (@RequestParam int departmentId){
+       List<Employee> list =  employeeService.getListOfEmployeeInaSameDepartment(departmentId) ;
+
+        return list;
     }
 }

@@ -1,38 +1,41 @@
 package com.employeemanagementsystem.empman.Service;
 
 import com.employeemanagementsystem.empman.Dtos.empDto;
-import com.employeemanagementsystem.empman.Enums.Gender;
-import com.employeemanagementsystem.empman.Models.Department;
 import com.employeemanagementsystem.empman.Models.Employee;
-import com.employeemanagementsystem.empman.Repository.DepartmentRepo;
 import com.employeemanagementsystem.empman.Repository.EmployeeRepo;
+import com.employeemanagementsystem.empman.Transformers.EmployeeTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Optional;
-
+@Service
 public class EmployeeService {
 
     @Autowired
     private EmployeeRepo employeeRepo;
 
-    @Autowired
-    DepartmentRepo departmentRepo;
+
 
     public String addEmp(empDto empDto) {
-    int deptId=empDto.getDeptId();
-    Optional<Department> departmentOptional=departmentRepo.findById(deptId);
-    Department department=null;
-    if (!departmentOptional.isEmpty()){
-        department=departmentOptional.get();
-        Integer noOfEmployees=department.getNumberOfEmployeeInDepartments();
-        Integer currCount=noOfEmployees++;
-        department.setNumberOfEmployeeInDepartments(currCount);
+      Employee emp = EmployeeTransformer.covertDtoToEntity(empDto) ;
+      employeeRepo.save(emp) ;
+      return "Employee added successfully" ;
     }
-    String name=empDto.getEmpName();
-    int age=empDto.getAge();
-    Gender gender=empDto.getGender();
 
-    //foreign key
+    public List<Employee> getListOfEmployeeInaSameDepartment(int departmentId) {
 
+        List<Employee> employeeList = employeeRepo.findAll() ;
+        List<Employee> employeeList1 = new ArrayList<>() ;
+
+        for (int i = 0 ; i<employeeList.size() ; i++){
+            Employee emp = employeeList.get(i) ;
+
+            if (emp.getDepartmentId() == departmentId){
+                employeeList1.add(emp) ;
+            }
+
+        }
+        return employeeList1 ;
     }
 }

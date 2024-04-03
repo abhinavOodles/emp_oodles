@@ -23,7 +23,7 @@ public class Department {
 
     private String departmentName ;
 
-    private Integer numberOfEmployeeInDepartments;
+
 
     @OneToMany(mappedBy = "department")
     private List<Employee> employeeList =  new ArrayList<>();

@@ -1,7 +1,7 @@
 package com.employeemanagementsystem.empman.Dtos;
 
+import com.employeemanagementsystem.empman.Enums.Designation;
 import com.employeemanagementsystem.empman.Enums.Gender;
-import com.employeemanagementsystem.empman.Models.Department;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +17,9 @@ public class empDto {
     private int age;
     private Gender gender;
     private int deptId;
-    private Department department;
+    private Designation designation;
+    private int departmentId ;
+    private String departmentName ;
+    private String companyName ;
+
 }

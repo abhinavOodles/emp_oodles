@@ -4,6 +4,7 @@ import com.employeemanagementsystem.empman.Enums.Designation;
 import com.employeemanagementsystem.empman.Enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
@@ -11,6 +12,7 @@ import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Entity
 @Table(name="Employee")
 public class Employee {
@@ -28,7 +30,12 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     private Designation designation ;
-    @Column(nullable = false)
+
+
+    private int departmentId ;
+
+    private String departmentName ;
+
     private String companyName ;
 
     @ManyToOne

@@ -9,7 +9,6 @@ public class CompanyTransformer {
     public static Company convertDtoTOEntity (addCompanyDto companyDto){
         Company company = Company.builder().registrationNumber(companyDto.getRegistrationNumber())
                 .yearOFRegistration(LocalDate.ofEpochDay(companyDto.getYearOfRegistration()))
-                .numberOfEmployees(companyDto.getNumberOfEmployee())
                 .build() ;
 
         return company ;

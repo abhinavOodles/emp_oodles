@@ -25,7 +25,7 @@ public class Company {
 
     private LocalDate yearOFRegistration ;
 
-    private int numberOfEmployees ;
+
 
     @OneToMany(mappedBy = "company",cascade = CascadeType.ALL)
     private List<Department> departments = new ArrayList<>() ;

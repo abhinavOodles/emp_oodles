@@ -7,8 +7,9 @@ public class DepartmentTransformer {
 
     public static Department convertDtoTOEntity(DepartmentEntryDto departmentEntryDto){
         Department department = Department.builder()
-                .departmentId(departmentEntryDto.getDepartmentId())
+                .departmentId((departmentEntryDto.getDepartmentId()))
                 .departmentName(departmentEntryDto.getDepartmentName())
+
                 .build();
 
         return department ;
