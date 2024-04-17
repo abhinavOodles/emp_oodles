@@ -7,6 +7,7 @@ import com.employeemanagementsystem.empman.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class EmployeeController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
-
+    @PreAuthorize("hasRole('Emp')")
     @GetMapping("/get-list-of-employee-same-department")
     private List<Employee> employeeList (@RequestParam int departmentId){
        List<Employee> list =  employeeService.getListOfEmployeeInaSameDepartment(departmentId) ;
@@ -60,5 +61,10 @@ public class EmployeeController {
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST) ;
         }
+    }
+    @PreAuthorize("hasRole('Emp')")
+    @GetMapping("/")
+    private String getName (){
+        return "abhinav" ;
     }
 }

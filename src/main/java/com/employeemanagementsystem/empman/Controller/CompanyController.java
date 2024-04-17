@@ -8,6 +8,7 @@ import com.employeemanagementsystem.empman.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,9 +18,10 @@ public class CompanyController {
     @Autowired
     CompanyService companyService ;
 
-
+    @PreAuthorize("hasRole('Admin')")
     @PostMapping("/add")
     public ResponseEntity<String> add (@RequestBody addCompanyDto companyDto) {
+
         companyService.add(companyDto) ;
         return new ResponseEntity<>("Company added successfully" , HttpStatus.CREATED);
     }
