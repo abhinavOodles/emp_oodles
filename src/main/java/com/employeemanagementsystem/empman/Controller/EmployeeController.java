@@ -4,6 +4,7 @@ import com.employeemanagementsystem.empman.Dtos.DepartmentEntryDto;
 import com.employeemanagementsystem.empman.Dtos.empDto;
 import com.employeemanagementsystem.empman.Models.Employee;
 import com.employeemanagementsystem.empman.Service.EmployeeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Employees")
+@Slf4j
 public class EmployeeController {
 
 
     @Autowired
     private EmployeeService employeeService;
 
+   // @PreAuthorize("hasRole('Emp')")
     @PostMapping("/add-Employee")
-    public ResponseEntity<String> addDepartment (@RequestBody empDto empDto){
+    public ResponseEntity<String> addEmployee (@RequestBody empDto empDto){
+        log.info("Adding New Employee");
         try {
             String result =  employeeService.addEmp(empDto);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -31,9 +35,10 @@ public class EmployeeController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
-    @PreAuthorize("hasRole('Emp')")
+  //  @PreAuthorize("hasRole('Emp')")
     @GetMapping("/get-list-of-employee-same-department")
     private List<Employee> employeeList (@RequestParam int departmentId){
+        log.info("Getting List Of Employee");
        List<Employee> list =  employeeService.getListOfEmployeeInaSameDepartment(departmentId) ;
 
         return list;
@@ -62,7 +67,7 @@ public class EmployeeController {
             return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST) ;
         }
     }
-    @PreAuthorize("hasRole('Emp')")
+    //@PreAuthorize("hasRole('Emp')")
     @GetMapping("/")
     private String getName (){
         return "abhinav" ;
