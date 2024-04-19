@@ -1,18 +1,19 @@
-package com.employeemanagementsystem.empman.Models;
+package com.employeemanagementsystem.empman.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
-public class JwtResponse {
+public class AuthenticationRequest {
 
-    private String username ;
-    private String jwtToken ;
+    private String email;
+    String password;
+
 
 
 }

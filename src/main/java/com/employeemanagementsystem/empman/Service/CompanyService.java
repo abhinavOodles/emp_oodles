@@ -12,8 +12,10 @@ import java.util.Optional;
 
 @Service
 public class CompanyService {
+
     @Autowired
     CompanyRepo companyRepo  ;
+
     public void add(addCompanyDto company) {
        Company company1 = CompanyTransformer.convertDtoTOEntity(company) ;
        companyRepo.save(company1) ;
