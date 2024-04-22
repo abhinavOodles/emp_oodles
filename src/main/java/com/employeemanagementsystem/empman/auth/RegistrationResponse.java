@@ -1,19 +1,17 @@
 package com.employeemanagementsystem.empman.auth;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+@Builder
+@Data
+public class RegistrationResponse {
 
-    private String email;
-     String password;
-
-
-
+    private Integer HttpStatus;
+    private String message;
 }

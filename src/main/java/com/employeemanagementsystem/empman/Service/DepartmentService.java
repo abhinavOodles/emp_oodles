@@ -49,4 +49,20 @@ public class DepartmentService {
 
         return number;
     }
+
+    public String changeTheNameOfDepartment(int departmentId, String newName) throws DepartmentDoesNotExist{
+        Optional<Department> d = departmentRepo.findById(departmentId) ;
+
+        if (d.isEmpty()){
+            throw new DepartmentDoesNotExist("Department-Id is word") ;
+        }
+
+        else{
+            Department department = d.get() ;
+            department.setDepartmentName(newName);
+            departmentRepo.save(department) ;
+            return "Changed Successfully" ;
+        }
+
+    }
 }
