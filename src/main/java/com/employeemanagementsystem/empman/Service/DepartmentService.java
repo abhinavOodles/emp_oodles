@@ -1,8 +1,10 @@
 package com.employeemanagementsystem.empman.Service;
 
 import com.employeemanagementsystem.empman.Dtos.DepartmentEntryDto;
+import com.employeemanagementsystem.empman.Exception.CompanyNotFound;
 import com.employeemanagementsystem.empman.Exception.DepartmentAlreadyPresent;
 import com.employeemanagementsystem.empman.Exception.DepartmentDoesNotExist;
+import com.employeemanagementsystem.empman.Models.Company;
 import com.employeemanagementsystem.empman.Models.Department;
 import com.employeemanagementsystem.empman.Models.Employee;
 import com.employeemanagementsystem.empman.Repository.DepartmentRepo;
@@ -43,9 +45,15 @@ public class DepartmentService {
         for (int i = 0; i < employeeList.size(); i++) {
             Employee employee = employeeList.get(i);
             if (employee.getDepartmentId() == departmentId) {
+
                 number++;
+
             }
+
+
         }
+
+        System.out.print(number);
 
         return number;
     }
@@ -64,5 +72,25 @@ public class DepartmentService {
             return "Changed Successfully" ;
         }
 
+    }
+
+    public List<Department> listOfDepartments() {
+
+        return departmentRepo.findAll() ;
+    }
+
+    public void deleteDepartments(int departmentId) throws DepartmentDoesNotExist {
+        Optional<Department> optionalDepartment = departmentRepo.findById(departmentId) ;
+        if(optionalDepartment.isEmpty()){
+            throw new DepartmentDoesNotExist("Wrong Department-Id");
+        }else{
+            Department department = optionalDepartment.get() ;
+            departmentRepo.delete(department);
+        }
+
+    }
+
+    public void deleteAllDepartments() {
+        departmentRepo.deleteAll();
     }
 }

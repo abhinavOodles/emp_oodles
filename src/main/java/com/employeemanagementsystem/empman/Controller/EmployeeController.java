@@ -1,6 +1,7 @@
 package com.employeemanagementsystem.empman.Controller;
 
 import com.employeemanagementsystem.empman.Dtos.empDto;
+import com.employeemanagementsystem.empman.Enums.Gender;
 import com.employeemanagementsystem.empman.Models.Employee;
 import com.employeemanagementsystem.empman.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,6 @@ public class EmployeeController {
         return list;
     }
 
-
-
     @PutMapping("/change-the-name-of-employee")
     private ResponseEntity<String> changeName (@RequestParam int employeeId , @RequestParam String name) {
         try{
@@ -59,4 +58,27 @@ public class EmployeeController {
             return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST) ;
         }
     }
+
+    @DeleteMapping("/remove-all-employee")
+    public ResponseEntity<String> deleteAllEmployee(){
+        try {
+            String res = employeeService.deleteAllEmployee() ;
+            return new ResponseEntity<>(res , HttpStatus.FOUND) ;
+        }
+        catch (Exception e){
+            return new ResponseEntity<>("Some Error Occurs" , HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/get-list-Acc-Gender")
+    private List<Employee> getEmployeeAccToGender(@RequestParam Gender gender){
+        return employeeService.getListOfEmpAccToGender(gender);
+    }
+
+    @GetMapping("/get-list-of-emp")
+    public List<Employee> getListOfEmployee (){
+            return employeeService.getAllEmployee() ;
+
+    }
+
 }

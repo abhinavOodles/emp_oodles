@@ -1,6 +1,7 @@
 package com.employeemanagementsystem.empman.Service;
 
 import com.employeemanagementsystem.empman.Dtos.addCompanyDto;
+import com.employeemanagementsystem.empman.Exception.CompanyNotFound;
 import com.employeemanagementsystem.empman.Exception.RegistrationNumberNotFound;
 import com.employeemanagementsystem.empman.Models.Company;
 import com.employeemanagementsystem.empman.Repository.CompanyRepo;
@@ -8,6 +9,7 @@ import com.employeemanagementsystem.empman.Transformers.CompanyTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,9 +18,10 @@ public class CompanyService {
     @Autowired
     CompanyRepo companyRepo  ;
 
-    public void add(addCompanyDto company) {
+    public  String addCompany (addCompanyDto company) {
        Company company1 = CompanyTransformer.convertDtoTOEntity(company) ;
        companyRepo.save(company1) ;
+       return "Company added Successfully";
     }
 
     public String changeName(int registrationNumber, String name) throws RegistrationNumberNotFound {
@@ -32,5 +35,23 @@ public class CompanyService {
             companyRepo.save(company) ;
             return "Company with Registration Number " + registrationNumber + " now named as "+ name ;
         }
+    }
+
+    public List<Company> getTheList( )   {
+      return companyRepo.findAll() ;
+    }
+
+    public String deleteCompany(int regsNumber) throws CompanyNotFound{
+        Optional<Company> companyOptional = companyRepo.findById(regsNumber) ;
+
+        if (companyOptional.isEmpty()){
+            throw new CompanyNotFound("Company Not Found") ;
+        }
+        else {
+            Company company = companyOptional.get() ;
+            companyRepo.delete(company);
+            return "Company Deleted Successfully" ;
+        }
+
     }
 }

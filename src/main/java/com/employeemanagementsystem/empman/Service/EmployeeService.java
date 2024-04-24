@@ -1,6 +1,7 @@
 package com.employeemanagementsystem.empman.Service;
 
 import com.employeemanagementsystem.empman.Dtos.empDto;
+import com.employeemanagementsystem.empman.Enums.Gender;
 import com.employeemanagementsystem.empman.Exception.EmployeeDoesNotExist;
 import com.employeemanagementsystem.empman.Models.Employee;
 import com.employeemanagementsystem.empman.Repository.EmployeeRepo;
@@ -70,5 +71,28 @@ public class EmployeeService {
             return "Employee with empID " + empId + "removed successfully" ;
         }
 
+    }
+
+    public String deleteAllEmployee() {
+         employeeRepo.deleteAll();
+         return "All Employee Deleted Successfully" ;
+    }
+
+    public List<Employee> getListOfEmpAccToGender(Gender gender) {
+
+        List<Employee> employeeList = employeeRepo.findAll();
+        List<Employee> list = new ArrayList<>();
+
+        for (int i = 0 ; i<employeeList.size() ; i++){
+            Employee employee = employeeList.get(i);
+            if(employee.getGender()==gender){
+                list.add(employee);
+            }
+        }
+        return list ;
+    }
+
+    public List<Employee> getAllEmployee() {
+        return employeeRepo.findAll();
     }
 }
