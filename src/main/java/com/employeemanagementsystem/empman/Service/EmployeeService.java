@@ -4,12 +4,17 @@ import com.employeemanagementsystem.empman.Dtos.empDto;
 import com.employeemanagementsystem.empman.Enums.Designation;
 import com.employeemanagementsystem.empman.Enums.Gender;
 import com.employeemanagementsystem.empman.Exception.CompanyNotFound;
+import com.employeemanagementsystem.empman.Exception.DepartmentAlreadyPresent;
 import com.employeemanagementsystem.empman.Exception.EmployeeDoesNotExist;
+import com.employeemanagementsystem.empman.Exception.WorkInASameDepartment;
 import com.employeemanagementsystem.empman.Models.Company;
+import com.employeemanagementsystem.empman.Models.Department;
 import com.employeemanagementsystem.empman.Models.Employee;
 import com.employeemanagementsystem.empman.Repository.CompanyRepo;
+import com.employeemanagementsystem.empman.Repository.DepartmentRepo;
 import com.employeemanagementsystem.empman.Repository.EmployeeRepo;
 import com.employeemanagementsystem.empman.Transformers.EmployeeTransformer;
+import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -24,6 +29,9 @@ public class EmployeeService {
 
     @Autowired
     private CompanyRepo companyRepo ;
+
+    @Autowired
+    private DepartmentRepo departmentRepo ;
 
 
 
@@ -148,6 +156,30 @@ public class EmployeeService {
             employee.setGender(gender);
             employeeRepo.save(employee);
             return "The Data Of Employee With Id: " + id +" Is Successfully Updated" ;
+        }
+    }
+
+    public String changeTheDepartment(int id, String departmentName) throws DepartmentAlreadyPresent , EmployeeDoesNotExist , WorkInASameDepartment {
+        Optional<Department> optionalDepartment = departmentRepo.findByName(departmentName);
+
+        if (optionalDepartment.isEmpty()) {
+            throw new DepartmentAlreadyPresent("Department Name Is Not Correct");
+        }
+            Optional<Employee> optionalEmployee = employeeRepo.findById(id);
+        if (optionalEmployee.isEmpty()){
+            throw new EmployeeDoesNotExist("Employee Does Not Exist") ;
+        }
+        else {
+            Employee employee = optionalEmployee.get();
+
+            if(employee.getDepartmentName().equals(departmentName)){
+                throw new WorkInASameDepartment("Employee Already Working In  Same Department");
+            }
+
+            employee.setDepartmentName(departmentName);
+            employeeRepo.save(employee);
+
+            return "The Department Of Employee With Employee-ID "+id+" Is Changed Successfully" ;
         }
     }
 }

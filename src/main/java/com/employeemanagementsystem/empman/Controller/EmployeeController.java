@@ -8,10 +8,7 @@ import com.employeemanagementsystem.empman.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -105,6 +102,16 @@ public class EmployeeController {
         }
     }
 
+    @PutMapping("/put-the-emp-into-different-department")
+    public ResponseEntity<String> changeTheDepartment (@RequestParam int id , @RequestParam String departmentName){
+        try{
+            String res = employeeService.changeTheDepartment(id,departmentName) ;
+            return new ResponseEntity<>(res , HttpStatus.ACCEPTED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
     @PutMapping("/update-the-other-details-of-employee")
     public ResponseEntity<String> fillTheLeftOutDetails(@RequestParam int id , @RequestParam String companyName , @RequestParam Designation designation , @RequestParam int departmentId , @RequestParam String departmentName , @RequestParam Gender gender){
         try {

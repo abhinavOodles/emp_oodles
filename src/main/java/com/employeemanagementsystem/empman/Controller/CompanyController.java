@@ -29,7 +29,7 @@ public class CompanyController {
     }
 
     @PutMapping("/change-the-name-of-company")
-    public ResponseEntity<String> changeTheNameOfCompany (@RequestParam int regsNumber , @RequestParam String name) throws Exception{
+    public ResponseEntity<String> changeTheNameOfCompany (@RequestParam int regsNumber , @RequestParam String name){
         try {
             String res =  companyService.changeName(regsNumber, name);
             return new ResponseEntity<>(res , HttpStatus.ACCEPTED) ;

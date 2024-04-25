@@ -14,6 +14,7 @@ import org.apache.kafka.common.quota.ClientQuotaAlteration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -127,6 +128,26 @@ public class DepartmentService {
             employee.setSalary(salary);
             employeeRepo.save(employee);
             return "Salary Of Employee with Id: "+employeeId+" Saved Successfully"  ;
+        }
+    }
+
+    public List<Employee> listOfEmployeeInADepartment(int departmentId) throws DepartmentDoesNotExist{
+        List<Employee> ans = new ArrayList<>() ;
+        Optional<Department>optionalDepartment = departmentRepo.findById(departmentId);
+
+        if(optionalDepartment.isEmpty()){
+            throw new DepartmentDoesNotExist("Entered Department Id Is Wrong");
+        }
+        else{
+            List<Employee> employees = employeeRepo.findAll() ;
+
+            for (Employee employee : employees){
+                if (employee.getDepartmentId() == departmentId){
+                    ans.add(employee);
+                }
+            }
+
+            return ans ;
         }
     }
 }

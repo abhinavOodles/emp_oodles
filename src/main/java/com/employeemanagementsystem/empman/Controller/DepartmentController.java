@@ -1,7 +1,9 @@
 
 package com.employeemanagementsystem.empman.Controller;
 import com.employeemanagementsystem.empman.Dtos.DepartmentEntryDto;
+import com.employeemanagementsystem.empman.Exception.DepartmentAlreadyPresent;
 import com.employeemanagementsystem.empman.Models.Department;
+import com.employeemanagementsystem.empman.Models.Employee;
 import com.employeemanagementsystem.empman.Service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,17 @@ public class DepartmentController {
 
     }
 
+    @GetMapping("/list-of-employee-in-department")
+    public ResponseEntity<?> listOfEmployee (@RequestParam int departmentId)  {
+        try {
+            List<Employee> res = departmentService.listOfEmployeeInADepartment(departmentId);
+            return new ResponseEntity<>(res , HttpStatus.FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/list-of-departments")
     public List<Department> listOfDepartments () {
         return departmentService.listOfDepartments()  ;
@@ -66,6 +79,7 @@ public class DepartmentController {
         departmentService.deleteAllDepartments();
         return new ResponseEntity<>("All Departments Deleted Successfully" ,  HttpStatus.OK) ;
     }
+
 
 
     @PutMapping("/change-the-department-of-a-employee")
