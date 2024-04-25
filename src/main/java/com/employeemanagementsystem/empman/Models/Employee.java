@@ -37,6 +37,7 @@ public class Employee {
     private String departmentName ;
 
     private String companyName ;
+    private int salary ;
 
     @ManyToOne
     private Department department;

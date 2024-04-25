@@ -6,7 +6,6 @@ import com.employeemanagementsystem.empman.Service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -68,4 +67,26 @@ public class DepartmentController {
         return new ResponseEntity<>("All Departments Deleted Successfully" ,  HttpStatus.OK) ;
     }
 
+
+    @PutMapping("/change-the-department-of-a-employee")
+    private ResponseEntity<?> changeTheDepartment(@RequestParam int employeeId ,  @RequestParam int departmentId , @RequestParam String departmentName){
+        try {
+          String res =   departmentService.changeTheDepartment(employeeId,departmentId,departmentName);
+            return new ResponseEntity<>(res,HttpStatus.FOUND) ;
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/put-the-salary-of-employee")
+    private ResponseEntity<String>SetTheSalaryOfEmployee(@RequestParam int employeeId , @RequestParam int salary){
+        try {
+            String res = departmentService.setTheSalaryOfEmployee(employeeId,salary);
+            return new ResponseEntity<>(res , HttpStatus.CREATED) ;
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST);
+        }
+    }
 }

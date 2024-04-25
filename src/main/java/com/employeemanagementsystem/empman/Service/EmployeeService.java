@@ -1,9 +1,13 @@
 package com.employeemanagementsystem.empman.Service;
 
 import com.employeemanagementsystem.empman.Dtos.empDto;
+import com.employeemanagementsystem.empman.Enums.Designation;
 import com.employeemanagementsystem.empman.Enums.Gender;
+import com.employeemanagementsystem.empman.Exception.CompanyNotFound;
 import com.employeemanagementsystem.empman.Exception.EmployeeDoesNotExist;
+import com.employeemanagementsystem.empman.Models.Company;
 import com.employeemanagementsystem.empman.Models.Employee;
+import com.employeemanagementsystem.empman.Repository.CompanyRepo;
 import com.employeemanagementsystem.empman.Repository.EmployeeRepo;
 import com.employeemanagementsystem.empman.Transformers.EmployeeTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,9 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepo employeeRepo;
 
+    @Autowired
+    private CompanyRepo companyRepo ;
+
 
 
     public String addEmp(empDto empDto) {
@@ -31,8 +38,7 @@ public class EmployeeService {
         List<Employee> employeeList = employeeRepo.findAll() ;
         List<Employee> employeeList1 = new ArrayList<>() ;
 
-        for (int i = 0 ; i<employeeList.size() ; i++){
-            Employee emp = employeeList.get(i) ;
+        for (Employee emp :employeeList){
 
             if (emp.getDepartmentId() == departmentId){
                 employeeList1.add(emp) ;
@@ -83,8 +89,7 @@ public class EmployeeService {
         List<Employee> employeeList = employeeRepo.findAll();
         List<Employee> list = new ArrayList<>();
 
-        for (int i = 0 ; i<employeeList.size() ; i++){
-            Employee employee = employeeList.get(i);
+        for (Employee employee : employeeList){
             if(employee.getGender()==gender){
                 list.add(employee);
             }
@@ -94,5 +99,55 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployee() {
         return employeeRepo.findAll();
+    }
+
+    public List<Employee> getListOfEmployeeInACompany(int regsId) throws CompanyNotFound {
+        List<Employee> employeeList = employeeRepo.findAll();
+        Optional<Company> company = companyRepo.findById(regsId);
+        List<Employee> result = new ArrayList<>() ;
+
+        if (company.isEmpty()) {
+            throw new CompanyNotFound("CompanyId Is Not Correct");
+        } else {
+            for (Employee emp : employeeList) {
+                if (emp.getCompanyName().equals(company.get().getCompanyName())){
+                    result.add(emp) ;
+                }
+            }
+        }
+        return result ;
+    }
+
+    public String changeTheCompany(int id , String name , Designation designation) throws EmployeeDoesNotExist{
+        Optional<Employee> employeeOptional = employeeRepo.findById(id) ;
+        if (employeeOptional.isEmpty()){
+            throw new EmployeeDoesNotExist("Entered Employee-Id Is Not Correct");
+        }
+        else{
+            Employee employee = employeeOptional.get() ;
+            employee.setCompanyName(name);
+            employee.setDesignation(designation);
+            employeeRepo.save(employee);
+
+            return "Employee Added TO New Company" ;
+        }
+    }
+
+    public String fillTheLeftOutDetails(int id, String companyName, Designation designation, int departmentId, String departmentName, Gender gender) throws EmployeeDoesNotExist {
+        Optional<Employee> employeeOptional = employeeRepo.findById(id) ;
+
+        if (employeeOptional.isEmpty()){
+            throw new EmployeeDoesNotExist("Entered Employee-Id Is Not Correct");
+        }
+        else {
+            Employee employee = employeeOptional.get() ;
+            employee.setCompanyName(companyName);
+            employee.setDesignation(designation);
+            employee.setDepartmentId(departmentId);
+            employee.setDepartmentName(departmentName);
+            employee.setGender(gender);
+            employeeRepo.save(employee);
+            return "The Data Of Employee With Id: " + id +" Is Successfully Updated" ;
+        }
     }
 }

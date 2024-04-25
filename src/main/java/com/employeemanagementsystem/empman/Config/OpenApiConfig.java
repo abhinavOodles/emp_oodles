@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
 @OpenAPIDefinition(
         info = @Info(
@@ -52,4 +54,12 @@ import io.swagger.v3.oas.annotations.servers.Server;
         in = SecuritySchemeIn.HEADER
 )
 public class OpenApiConfig {
+    @Component
+    public static class KafkaConsumer {
+
+        @KafkaListener(topics = "Location-Update-Topic", groupId = "group-1")
+        public void consumeMessage(String message) {
+            System.out.println("Received message: " + message);
+        }
+    }
 }

@@ -3,12 +3,10 @@ package com.employeemanagementsystem.empman.Controller;
 
 import com.employeemanagementsystem.empman.Dtos.addCompanyDto;
 import com.employeemanagementsystem.empman.Models.Company;
-import com.employeemanagementsystem.empman.Models.Employee;
 import com.employeemanagementsystem.empman.Service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +18,7 @@ public class CompanyController {
     @Autowired
     CompanyService companyService ;
 
-    @PostMapping("/addNew")
+    @PostMapping("/add-company")
     public ResponseEntity<String> addCompany (@RequestBody addCompanyDto companyDto) {
         try {
             String res = companyService.addCompany(companyDto);
@@ -63,6 +61,8 @@ public class CompanyController {
             return new ResponseEntity<>("Company Not Found " , HttpStatus.NOT_FOUND) ;
         }
     }
+
+
 
 
 }

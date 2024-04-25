@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class DepartmentEntryDto {
 
-    private int departmentId ;
     private String departmentName ;
 
 }

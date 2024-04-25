@@ -27,7 +27,6 @@ public class Company {
     private String companyName ;
 
 
-
     @OneToMany(mappedBy = "company",cascade = CascadeType.ALL)
     private List<Department> departments = new ArrayList<>() ;
 
