@@ -4,9 +4,11 @@ package com.employeemanagementsystem.empman.Controller;
 import com.employeemanagementsystem.empman.Dtos.addCompanyDto;
 import com.employeemanagementsystem.empman.Models.Company;
 import com.employeemanagementsystem.empman.Service.CompanyService;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,8 +53,9 @@ public class CompanyController {
         }
     }
 
+
     @DeleteMapping("/delete-the-company")
-    public ResponseEntity<String> deleteTheCompany (@RequestParam int regsNumber) throws  Exception{
+    public ResponseEntity<String> deleteTheCompany (@RequestParam int regsNumber)   {
         try{
             String res = companyService.deleteCompany(regsNumber) ;
             return new ResponseEntity<>(  res , HttpStatus.OK) ;
@@ -62,7 +65,11 @@ public class CompanyController {
         }
     }
 
-
+        @DeleteMapping("/delete-all-company")
+        public ResponseEntity<String> deleteAllCompany (){
+            String res =  companyService.deleteAllCompany();
+            return new ResponseEntity<>(res , HttpStatus.ACCEPTED);
+        }
 
 
 }

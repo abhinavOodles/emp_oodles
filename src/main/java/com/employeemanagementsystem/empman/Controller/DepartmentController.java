@@ -1,7 +1,6 @@
 
 package com.employeemanagementsystem.empman.Controller;
 import com.employeemanagementsystem.empman.Dtos.DepartmentEntryDto;
-import com.employeemanagementsystem.empman.Exception.DepartmentAlreadyPresent;
 import com.employeemanagementsystem.empman.Models.Department;
 import com.employeemanagementsystem.empman.Models.Employee;
 import com.employeemanagementsystem.empman.Service.DepartmentService;
@@ -80,13 +79,11 @@ public class DepartmentController {
         return new ResponseEntity<>("All Departments Deleted Successfully" ,  HttpStatus.OK) ;
     }
 
-
-
     @PutMapping("/change-the-department-of-a-employee")
     private ResponseEntity<?> changeTheDepartment(@RequestParam int employeeId ,  @RequestParam int departmentId , @RequestParam String departmentName){
         try {
           String res =   departmentService.changeTheDepartment(employeeId,departmentId,departmentName);
-            return new ResponseEntity<>(res,HttpStatus.FOUND) ;
+            return new ResponseEntity<>(res,HttpStatus.FOUND)   ;
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);

@@ -1,5 +1,6 @@
 package com.employeemanagementsystem.empman.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,9 +23,11 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int registrationNumber ;
 
+
     private LocalDate yearOFRegistration ;
 
     private String companyName ;
+
 
 
     @OneToMany(mappedBy = "company",cascade = CascadeType.ALL)
@@ -32,6 +35,9 @@ public class Company {
 
     @OneToMany(mappedBy = "company" , cascade = CascadeType.ALL)
     private List<Employee> employeeList = new ArrayList<>() ;
+
+    @ManyToMany (mappedBy = "company" , cascade =  CascadeType.ALL)
+    private List<Service> serviceList = new ArrayList<>() ;
 
 
 

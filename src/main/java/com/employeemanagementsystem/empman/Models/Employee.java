@@ -26,7 +26,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private Gender gender ;
 
-   private  int age ;
+    private  int age ;
 
     @Enumerated(EnumType.STRING)
     private Designation designation ;
@@ -37,6 +37,7 @@ public class Employee {
     private String departmentName ;
 
     private String companyName ;
+
     private int salary ;
 
     @ManyToOne
