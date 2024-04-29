@@ -4,11 +4,9 @@ package com.employeemanagementsystem.empman.Controller;
 import com.employeemanagementsystem.empman.Dtos.addCompanyDto;
 import com.employeemanagementsystem.empman.Models.Company;
 import com.employeemanagementsystem.empman.Service.CompanyService;
-import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +18,7 @@ public class CompanyController {
     @Autowired
     CompanyService companyService ;
 
+    //add-company in the database
     @PostMapping("/add-company")
     public ResponseEntity<String> addCompany (@RequestBody addCompanyDto companyDto) {
         try {
@@ -30,6 +29,7 @@ public class CompanyController {
         }
     }
 
+    //update the name of the company in the database
     @PutMapping("/change-the-name-of-company")
     public ResponseEntity<String> changeTheNameOfCompany (@RequestParam int regsNumber , @RequestParam String name){
         try {
@@ -42,6 +42,7 @@ public class CompanyController {
 
     }
 
+    //get the list of all the company existing in database
     @GetMapping("/get-the-name")
     public ResponseEntity<?> getTheList (){
         try{
@@ -53,7 +54,7 @@ public class CompanyController {
         }
     }
 
-
+    // delete the company name with company-Id
     @DeleteMapping("/delete-the-company")
     public ResponseEntity<String> deleteTheCompany (@RequestParam int regsNumber)   {
         try{
@@ -64,7 +65,7 @@ public class CompanyController {
             return new ResponseEntity<>("Company Not Found " , HttpStatus.NOT_FOUND) ;
         }
     }
-
+       // delete all the existing company in database
         @DeleteMapping("/delete-all-company")
         public ResponseEntity<String> deleteAllCompany (){
             String res =  companyService.deleteAllCompany();

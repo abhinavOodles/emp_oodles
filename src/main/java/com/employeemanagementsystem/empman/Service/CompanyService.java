@@ -57,6 +57,6 @@ public class CompanyService {
 
     public String deleteAllCompany() {
         companyRepo.deleteAll();
-        return "All companies which is presented in database is deleted successfully" ;
+        return "All companies Which Is Presented In Database Is Deleted Successfully" ;
     }
 }

@@ -19,6 +19,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    //adding the employee in database
     @PostMapping("/add-Employee")
     public ResponseEntity<String> addEmployee(@RequestBody empDto empDto){
         try {
@@ -30,6 +31,7 @@ public class EmployeeController {
         }
     }
 
+    //for getting list of all employee working in same company
     @GetMapping("/list-of-emp-in-a-company")
     private ResponseEntity<?> getListOfEmployeeInACompany(@RequestParam int regsID){
         try {
@@ -37,9 +39,10 @@ public class EmployeeController {
             return new ResponseEntity<>(employeeList,HttpStatus.FOUND);
         }
         catch (Exception e){
-            return new ResponseEntity<>("CompanyId is not correct" , HttpStatus.NOT_FOUND) ;
+            return new ResponseEntity<>("CompanyId Is Not Correct" , HttpStatus.NOT_FOUND) ;
         }
     }
+    /*Using this code we can get all the details of employee working in a sae department*/
     @GetMapping("/get-list-of-employee-same-department")
     private List<Employee> employeeList (@RequestParam int departmentId){
         List<Employee> list =  employeeService.getListOfEmployeeInaSameDepartment(departmentId) ;
@@ -47,6 +50,7 @@ public class EmployeeController {
         return list;
     }
 
+    //changing the name of current employee
     @PutMapping("/change-the-name-of-employee")
     private ResponseEntity<String> changeName (@RequestParam int employeeId , @RequestParam String name) {
         try{
@@ -58,6 +62,7 @@ public class EmployeeController {
         }
     }
 
+    //deleting the employee in the database
     @DeleteMapping("/remove-employee")
     private ResponseEntity<String> deleteEmployee (@RequestParam int empId){
         try {
@@ -69,6 +74,7 @@ public class EmployeeController {
         }
     }
 
+    //deleting all the employee in the database
     @DeleteMapping("/remove-all-employee")
     public ResponseEntity<String> deleteAllEmployee(){
         try {
@@ -122,6 +128,4 @@ public class EmployeeController {
             return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST);
         }
     }
-
-
 }

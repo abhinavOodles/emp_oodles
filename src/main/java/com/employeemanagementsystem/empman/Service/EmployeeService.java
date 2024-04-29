@@ -38,7 +38,7 @@ public class EmployeeService {
     public String addEmp(empDto empDto) {
       Employee emp = EmployeeTransformer.covertDtoToEntity(empDto) ;
       employeeRepo.save(emp) ;
-      return "Employee added successfully" ;
+      return "Employee Added Successfully" ;
     }
 
     public List<Employee> getListOfEmployeeInaSameDepartment(int departmentId) {
@@ -51,7 +51,6 @@ public class EmployeeService {
             if (emp.getDepartmentId() == departmentId){
                 employeeList1.add(emp) ;
             }
-
         }
         return employeeList1 ;
     }
