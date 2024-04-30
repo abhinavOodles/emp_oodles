@@ -18,6 +18,7 @@ public class DepartmentController {
     @Autowired
     DepartmentService departmentService ;
 
+    // add all details of department in the database
     @PostMapping("/add-department")
     public ResponseEntity<String> addDepartment (@RequestBody DepartmentEntryDto departmentDto){
         try {
@@ -29,12 +30,13 @@ public class DepartmentController {
         }
     }
 
-
+    //get number of all employee working in a same department
     @GetMapping("/no-of-emp-in-a-department")
     private int noOfEmpInADepartment (@RequestParam int departmentId){
         return departmentService.getNumberOfEmployee(departmentId);
     }
 
+    //change the name of department in the database
     @PutMapping("/change-the-name-of department")
     private ResponseEntity<String> changeTheNameOfDepartment (@RequestParam int departmentId , @RequestParam String newName)   {
         try {
@@ -47,6 +49,7 @@ public class DepartmentController {
 
     }
 
+    //get list of all employee working in a same department
     @GetMapping("/list-of-employee-in-department")
     public ResponseEntity<?> listOfEmployee (@RequestParam int departmentId)  {
         try {
@@ -58,11 +61,13 @@ public class DepartmentController {
         }
     }
 
+    //get all the department present in the database
     @GetMapping("/list-of-departments")
     public List<Department> listOfDepartments () {
         return departmentService.listOfDepartments()  ;
     }
 
+    // delete the single department by departmentId
     @DeleteMapping("/delete-departmentById")
     public ResponseEntity<String> deleteDepartments (@RequestParam int departmentId) {
         try {
@@ -73,12 +78,14 @@ public class DepartmentController {
         }
     }
 
+    //delete all the database present in the database
     @DeleteMapping("delete-all-departments")
     public ResponseEntity<String> deleteAllDepartments(){
         departmentService.deleteAllDepartments();
         return new ResponseEntity<>("All Departments Deleted Successfully" ,  HttpStatus.OK) ;
     }
 
+    //to change the department of a employee
     @PutMapping("/change-the-department-of-a-employee")
     private ResponseEntity<?> changeTheDepartment(@RequestParam int employeeId ,  @RequestParam int departmentId , @RequestParam String departmentName){
         try {
@@ -90,6 +97,7 @@ public class DepartmentController {
         }
     }
 
+    // set the salary of emp acc to department
     @PutMapping("/put-the-salary-of-employee")
     private ResponseEntity<String>SetTheSalaryOfEmployee(@RequestParam int employeeId , @RequestParam int salary){
         try {
