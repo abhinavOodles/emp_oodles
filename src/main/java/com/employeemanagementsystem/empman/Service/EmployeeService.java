@@ -16,6 +16,7 @@ import com.employeemanagementsystem.empman.Repository.EmployeeRepo;
 import com.employeemanagementsystem.empman.Transformers.EmployeeTransformer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +26,17 @@ import java.util.Optional;
 public class EmployeeService {
 
     @Autowired
-    private EmployeeRepo employeeRepo;
+    private  EmployeeRepo employeeRepo;
 
     @Autowired
     private CompanyRepo companyRepo ;
 
     @Autowired
     private DepartmentRepo departmentRepo ;
+
+    public EmployeeService (EmployeeRepo employeeRepo){
+        this.employeeRepo = employeeRepo ;
+    }
 
 
 
@@ -104,8 +109,9 @@ public class EmployeeService {
         return list ;
     }
 
-    public List<Employee> getAllEmployee() {
-        return employeeRepo.findAll();
+    public   List<Employee>  getAllEmployee() {
+    //    return employeeRepo.findAll(Sort.by(Sort.Direction.ASC , "employeeName"));
+      return employeeRepo.findAll() ;
     }
 
     public List<Employee> getListOfEmployeeInACompany(int regsId) throws CompanyNotFound {

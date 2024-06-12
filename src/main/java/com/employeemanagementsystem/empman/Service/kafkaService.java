@@ -2,6 +2,8 @@ package com.employeemanagementsystem.empman.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +11,7 @@ import static com.employeemanagementsystem.empman.Constants.AppConstants.Locatio
 
 @Slf4j
 @Service
-public class kafkaService {
+public class kafkaService  {
 
     @Autowired
     KafkaTemplate<String, String> kafkaTemplate;
@@ -20,4 +22,5 @@ public class kafkaService {
         log.info("message produced");
         return true;
     }
+
 }

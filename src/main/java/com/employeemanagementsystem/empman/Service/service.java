@@ -17,12 +17,9 @@ import java.util.Optional;
 
 @Service
 public class service {
+
     @Autowired
     ServiceRepo serviceRepo ;
-    @Autowired
-    CompanyRepo companyRepo ;
-
-
 
 
     public String addService(ServiceDto service) {
@@ -83,8 +80,7 @@ public class service {
     }
 
     public List<com.employeemanagementsystem.empman.Models.Service> getListOfAllService() {
-       List<com.employeemanagementsystem.empman.Models.Service>  serviceList = serviceRepo.findAll() ;
-       return serviceList ;
+        return serviceRepo.findAll() ;
     }
 
     public String deleteService(int serviceId) throws ServiceIsNotPresent {
